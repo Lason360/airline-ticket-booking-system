@@ -1,0 +1,13 @@
+.service__item{
+    margin-top: 5%;
+    padding: 0.8rem;
+    border-bottom: 1px solid #14675386;
+    background-repeat: 1px solid hsl(195, 66%, 81%);
+    background-repeat: 0.5rem;
+}
+
+
+.service__item p{
+    font-style: 0.9rem;
+    color: var(--text-color);
+}

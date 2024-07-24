@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch&family=Heebo&family=Inter&family=Julee&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 1.5vw;
+}
+
+.head_about {
+    font-size: 2rem;
+    font-weight: 500;
+    color: black;
+    font-family: 'Cabin Sketch';
+    background-color: #ddedea;
+    border-radius: 2vw;
+    text-align: center;
+    width: 50%;
+    margin: 0.2vw auto;
+    padding: 1vw;
+    margin-top: 10%;
+}
+
+.flexContainer {
+    margin-top: 10%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 56vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.card_about1 {
+    
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: auto;
+    padding: 20%;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.card_about2 {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    height: auto;
+    padding: 2.4vw;
+    cursor: pointer;
+}
+
+.card_about1:hover,
+.card_about2:hover {
+    transform: scale(1.02);
+}
+
+.cardTitle {
+    font-family: 'Big Shoulders Display';
+    font-size: 1.67vw;
+    color: #2da78c;
+    text-align: center;
+}
+
+.cardText {
+    font-family: 'Heebo';
+    color: black;
+    text-align: center;
+}
+
+.img {
+    width: 100%;
+    height: 20vh;
+}
+
+.attribution {
+    font-size: 0.733vw;
+    text-align: center;
+}
+
+.attribution a {
+    color: hsl(228, 45%, 44%);
+}
+
+@media screen and (max-width: 780px) {
+    .flexContainer {
+        gap: 3.75vw;
+    }
+    
+    .card.suvs,
+    .card.luxury,
+    .card.sedans {
+        border-radius: 1.33vw;
+    }
+    
+    .attribution {
+        margin-top: 13.33vh;
+    }
+    .head_about{
+        margin-top: 30%;
+    }
+}
+
+@media screen and (max-width: 50%) {
+    .attribution {
+        margin-top: 50vh;
+    }
+}
+
+.gridContainer_about1 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 31.25vw;
+    gap: 2.5vw;
+    margin-left: 8.5%;
+    margin-right: 5%;
+    margin-bottom: 6.25vh;
+}
+
+.profileContainer {
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2.5vw;
+    margin-left: 9.375vw;
+    margin-right: 9.375vw;
+    margin-bottom: 6.25vh;
+    max-height: 80vh;
+}

@@ -1,0 +1,42 @@
+.background-container {
+    background-image: url('../assets/images/user_page.png');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 50vw;
+    padding: 5%;
+    margin-top: 10%;
+    margin-left: 25%;
+
+}
+
+.user-container {
+    background-color: white;
+    opacity: 0.7;
+    margin-top: 10%;
+    text-align: center; /* Center the content inside user-container */
+}
+
+.button-container {
+
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn-primary-new {
+    background-color: rgb(11,11,69);
+    border-radius: 40px;
+}
+
+
+.btn-primary-new2{
+
+    background-color: black;
+    border-radius: 40px;
+
+}
+
+.row-message{
+    font-weight: 700;
+}

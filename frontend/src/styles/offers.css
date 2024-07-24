@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch&family=Heebo&family=Inter&family=Julee&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 1vw;
+}
+
+.head{
+    margin-top: 10%;
+    font-size: 1.4rem;
+}
+
+.flexContainer {
+    margin-top: 2.14vh;
+    display: flex;
+    flex-wrap: wrap;
+    height: 49vh;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+    height: auto;
+    padding: 2.56vw;
+    cursor: pointer;
+}
+
+.card:hover {
+    scale: 1.02;
+}
+
+.cardTitle {
+    margin-top: 10%;
+    font-family: 'Big Shoulders Display';
+    font-size: 1rem;
+    color: black;
+    font-weight: 800;
+    text-align: center;
+}
+
+.cardText {
+    font-family: 'Heebo';
+    color: black;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.img {
+    width: 100%;
+    height: 40vh;
+}
+
+.attribution {
+    font-size: 0.733vw;
+    text-align: center;
+}
+
+.attribution a {
+    color: hsl(228, 45%, 44%);
+}
+
+.button:hover {
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0);
+    border: 0.67vw solid #fff;
+    color: black;
+}
+
+.buttonLink:hover {
+    color: #fff;
+}
+
+@media screen and (max-width: 780px) {
+    
+    .flexContainer {
+        gap: 1.33vw;
+    }
+
+    .card.suvs,
+    .card.luxury,
+    .card.sedans {
+        border-radius: 0.67vw;
+    }
+
+    .attribution {
+        margin-top: 26.67vh;
+    }
+    .head{
+        margin-top: 30%;
+    }
+}
+
+
+
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 80vw;
+    gap: 2vw;
+    margin-left: 10vw;
+    margin-bottom: 13.33vh;
+}
+
+  
+  
+  
+
+  

@@ -1,0 +1,96 @@
+.reg__container {
+    background-image: url('../assets/images/plane_Register.jpg');
+    background-size: 100% 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    box-shadow: rgba(17, 12, 46, 0.15) 0vw 3.2vw 6.4vw 0vw;
+    height: auto;
+    padding: 5%;
+    width: 100%;
+    margin-top: 10%; /* Add margin to the top of the page */
+}
+
+.reg__form {
+    background-color: white;
+    opacity: 0.8;
+    padding: 5%;
+    border-radius: 1vw;
+    box-shadow: 0 0 1vw rgba(0, 0, 0, 0.2);
+    width: 60%;
+    position: relative;
+    height: auto;
+}
+
+.reg__form h2 {
+    color: black;
+    text-align: center;
+    margin-bottom: 1.5vw;
+}
+
+.reg__form input {
+    width: 100%;
+    padding: 7% 13%;
+    border-radius: 1vw;
+    border: none;
+    padding-left: 10%;
+    font-size: 1rem;
+    color: var(--heading-color);
+}
+
+.reg__form input:focus {
+    outline: none;
+}
+
+.auth__btn {
+    background: var(--heading-color) !important;
+    width: 100%;
+    color: #fff !important;
+}
+
+.reg__form p {
+    font-size: 1.2vw;
+    color: black;
+    margin-top: 1.125vw;
+    text-align: center;
+}
+
+#box::placeholder {
+    border: 0.0125vw solid #c3c3c3;
+    padding: 0.375vw;
+    border-radius: 0.625vw;
+    background-color: #c3c3c3;
+    color: black;
+    width: 100%;
+    height: 20%;
+    font-size: 1rem;
+}
+
+@media screen and (max-width: 768px) {
+    .reg__container {
+        width: 100%;
+        height: auto;
+        padding: 10%;
+    }
+
+    .reg__form {
+        width: 100%;
+        height: auto;
+        padding: 10%;
+    }
+
+    .reg__form input {
+        font-size: 1rem;
+    }
+
+    .reg__form p {
+        font-size: 1rem;
+    }
+
+    .google__btn a {
+        font-size: 1rem;
+    }
+
+    #box-log::placeholder {
+        width: auto;
+    }
+}

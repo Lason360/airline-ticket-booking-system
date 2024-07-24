@@ -1,0 +1,239 @@
+/* Navigation */
+.navigation {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  justify-content: space-between;
+}
+
+.nav__item {
+  margin: 0 0.2rem;
+}
+
+.nav__item a {
+  text-decoration: none;
+  color: var(--heading-color);
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.nav__item a:hover {
+  color: inherit;
+}
+
+.nav__item a.active__link {
+  color: var(--secondary-color);
+}
+
+/* Mobile Menu Styles */
+.mobile-menu-open .mobile-menu-icon {
+  display: block;
+}
+
+.mobile-menu-open .navigation {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Sticky Header */
+.sticky__header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background: #fff;
+  z-index: 999;
+  box-shadow: 0 0.3rem 0.8rem rgba(0, 0, 0, 0.1);
+}
+
+/* Media query for smaller screens */
+@media (max-width: 800px) {
+  .header {
+    position: sticky;
+    height: auto;
+    padding: 1.5rem 0;
+    float: none;
+    display: block;
+    font-size: 1rem;
+  }
+
+  .logo img {
+    width: 100%;
+    max-width: 15rem;
+  }
+
+  .navigation {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 10vh;
+    left: 0;
+    right: 0;
+    background: #fff;
+    transition: opacity 0.3s ease;
+    z-index: 998;
+  }
+
+  .mobile-menu-open .navigation {
+    display: flex;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+    cursor: pointer;
+    z-index: 999;
+  }
+
+  .nav__right {
+    justify-content: center;
+  }
+
+  .nav__btns {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  z-index: 1000;
+  transition: background-color 0.3s;
+}
+
+.header.mobile-menu-open {
+  background-color: white;
+  padding-top: 1vh;
+  height: 40%;
+}
+
+.Logo {
+  grid-area: logo;
+  height: 70px;
+}
+
+.Nav {
+  display: grid;
+  grid-area: nav;
+  grid-template-columns: repeat(4, auto);
+  align-items: center;
+  justify-items: center;
+}
+
+.Nav a {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  transition: 0.5s;
+  text-decoration: none;
+}
+
+.Nav a:hover {
+  transform: scale(1.1);
+}
+
+.Nav button {
+  padding: 10px;
+  outline: none;
+  border: none;
+  font-size: 20px;
+  color: #fff;
+  font-weight: 600;
+  background-color: rgba(255, 0, 0, 0.5);
+  box-shadow: 0px 5px 0px 0px rgba(255, 0, 0, 0.25);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 70ms;
+  
+
+}
+
+.Nav button:active {
+  transform: translateY(3px);
+  box-shadow: 0px 2px 0px 0px rgba(255, 0, 0, 0.25);
+}
+
+.Menu {
+  display: none;
+  grid-area: menu;
+  margin: 0 5vh 0 0;
+  padding: 0;
+  justify-self: end;
+  font-size: 2rem;
+  border: none;
+  background: none;
+  outline: none;
+  transition: 0.35s;
+}
+
+.Menu:active {
+  transform: scale(1.2);
+}
+
+@media (max-width: 700px) {
+  .Header {
+    grid-template-areas: "logo menu" "nav nav";
+  }
+  .Nav {
+    grid-template-rows: repeat(4, auto);
+    grid-template-columns: none;
+    grid-row-gap: 20px;
+    padding: 30px 0 30px;
+    background: rgba(40, 44, 47, 0.95);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
+  .Menu{
+    display: inline;
+  }
+}
+
+/* Animation classes */
+.NavAnimation-enter {
+  opacity: 0;
+  transform: scale(0.5);
+}
+.NavAnimation-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 350ms, transform 350ms;
+}
+.NavAnimation-exit {
+  opacity: 1;
+}
+.NavAnimation-exit-active {
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 350ms, transform 350ms;
+}
+
+.sticky__header {
+  width: 100%;
+  height: 30%;
+  line-height: 3vh;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  left: 0;
+  box-shadow: 3px 3px 8px-3px #ddd;
+  z-index: 999;
+}

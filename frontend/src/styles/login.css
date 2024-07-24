@@ -1,0 +1,137 @@
+
+
+.login__container {
+  background-image: url('../assets/images/plane_Register.jpg');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: auto;
+  padding: 5%;
+  width:100%;
+  margin-top: 10%;
+}
+
+.login__form h2 {
+  color: black;
+  text-align: center;
+  /* margin-bottom: 3%; */
+}
+
+.login__form {
+  background-color: white;
+  opacity: 0.8;
+  padding: 5%;
+  border-radius: 1vw;
+  box-shadow: 0 0 1vw rgba(0, 0, 0, 0.2);
+  width: 60%;
+  position: relative;
+  height: auto;
+}
+
+.login__form input {
+  width: 100%;
+  padding: 7% 13%;
+  border-radius: 1vw;
+  border: none;
+  padding-left: 10%;
+  font-size: 1rem;
+  color: var(--heading-color);
+}
+
+.login__form input:focus {
+  outline: none;
+}
+
+
+.login__form p {
+  font-size: 1rem;
+  color: black;
+  margin-top: 1vw;
+  text-align: center;
+  font-weight: 500;
+}
+
+.login__form p a {
+  color: var(--heading-color);
+  text-decoration: none;
+  margin-left: 0.625vw;
+  font-weight: 500;
+}
+
+.google__btn {
+  background: var(--heading-color) !important;
+  color: #fff !important;
+  border: 0.016vw !important;
+  font-weight: 0.016vw !important;
+  margin-top: 0.625vw;
+}
+
+.google__btn a {
+  text-decoration: none;
+  font-size: 1.35vw;
+  color: var(--heading-color);
+}
+
+.google__btn a:hover {
+  color: inherit;
+}
+
+.head_login {
+  margin-bottom: 3.75vw !important;
+}
+
+#box-log::placeholder {
+  border: 0.016vw solid #c3c3c3;
+  padding: 5%;
+  margin: 2%;
+  border-radius: 1vw;
+  background-color: #c3c3c3;
+  color: black;
+  width: 100%;
+  height: 20%;
+  font-size: 1rem;
+}
+
+.btn_secondary1{
+  margin-left: 6vw;
+  background-color: #5c4033 !important;
+  width:50%;
+  color: white !important;
+  border-radius: 20px !important;
+  font-size: 1rem;
+}
+@media screen and (max-width: 50%) {
+  
+  
+  .login__container {
+    width: 100%;
+    height: auto; 
+    padding: 10%; 
+  }
+  
+  .login__form {
+    width: 100%;
+    height: auto;
+    padding: 10%; 
+  }
+  
+  .login__form input {
+    font-size: 1rem; 
+  }
+  
+  .login__form p {
+    font-size: 1rem; 
+  }
+  
+  .google__btn a {
+    font-size: 1rem;
+  }
+  #box-log::placeholder {
+    width: auto;
+    
+  }
+  
+}
+
+
+

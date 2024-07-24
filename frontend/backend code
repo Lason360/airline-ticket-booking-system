@@ -1,0 +1,250 @@
+## install those modules for run this code
+# pip install flask
+# pip install flask-mysqldb
+# pip install flask-bcrypt
+# pip install flask-jwt-extended
+# pip install flask-cors
+
+
+from flask import Flask, request, jsonify, session
+from datetime import datetime, timedelta, timezone, date, timedelta
+from flask_mysqldb import MySQL
+from flask_bcrypt import Bcrypt
+from flask_jwt_extended import create_access_token, get_jwt, get_jwt_identity, unset_jwt_cookies, jwt_required, JWTManager
+from flask_cors import CORS
+from func import calculate_age
+
+import json
+# sdoosnfcrd
+
+app = Flask(__name__)
+CORS(app, supports_credentials=True)
+
+
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = 'Anupa2001'
+app.config['MYSQL_DB'] = 'database_v4'
+
+
+mysql = MySQL(app)
+
+app.secret_key = 'your_secret_key_here'
+bcrypt = Bcrypt(app)
+
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
+# app.config["JWT_SECRET_KEY"] = "super-secret"
+jwt = JWTManager(app)
+
+
+@app.route('/')
+def hello_world():
+    return 'Hello, World!'
+
+
+@app.route("/signup/<type>", methods=["POST"])
+def signup(type):
+    # # Extract data from the JSON request data
+    email = request.json["email"]
+    firstName = request.json["firstName"]
+    lastName = request.json["lastName"]
+    gender = request.json["gender"]
+    addressLine1 = request.json["addressLine1"]
+    addressLine2 = request.json["addressLine2"]
+    country = request.json["country"]
+    city = request.json["city"]
+    birthday = request.json["birthday"]
+    passportNumber = request.json["passportNumber"]
+
+    age = calculate_age(birthday)
+    address = addressLine1 + " " + addressLine2 + " " + city
+
+    cur = mysql.connection.cursor()
+    cur.execute("""call check_user_exsits(%s);;""", (email,))
+    user_exists = cur.fetchone()
+
+    if user_exists:
+        return jsonify({"error": "Email already exists"}), 409
+
+    if (type == "r"):
+        password = request.json["password"]
+        hashed_password = bcrypt.generate_password_hash(password)
+        cur.execute("""call register(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);""",
+                    ("gold", firstName, lastName, 0, age, email, gender, passportNumber, address, country, birthday, hashed_password,))
+    else:
+        cur.execute("""call register_guest(%s, %s, %s, %s, %s, %s, %s, %s, %s);""",
+                    (firstName, lastName, age, email, gender, passportNumber, address, country, birthday,))
+
+    mysql.connection.commit()
+    cur.close()
+    return jsonify({
+        "message": "User created successfully"
+    }), 201
+
+
+@app.route("/login", methods=["POST"])
+def login_user():
+    # Extract email and password from the JSON request data
+    email = request.json["email"]
+    password = request.json["password"]
+
+    # Query the database for a user with the given email
+    cur = mysql.connection.cursor()
+    cur.execute("""call check_login(%s);""", (email,))
+    user_password = cur.fetchone()
+
+    if not user_password:
+        return jsonify({"error": "Invalid Username or Password"}), 401
+
+    stored_password_hash = user_password[0]
+
+    # Check if the provided password matches the hashed password in the database
+    if not bcrypt.check_password_hash(stored_password_hash, password):
+        return jsonify({"error": "Invalid Username or Password"}), 401
+
+    access_token = create_access_token(identity=email)
+
+    cur.close()
+
+    return jsonify({
+        "access_token": access_token,
+        "email": email
+    })
+
+
+@app.after_request
+def refresh_expiring_jwts(response):
+    try:
+        exp_timestamp = get_jwt()["exp"]
+        now = datetime.now(timezone.utc)
+        target_timestamp = datetime.timestamp(now + timedelta(minutes=30))
+        if target_timestamp > exp_timestamp:
+            access_token = create_access_token(identity=get_jwt_identity())
+            data = response.get_json()
+            if type(data) is dict:
+                data["access_token"] = access_token
+                response.data = json.dumps(data)
+        return response
+    except (RuntimeError, KeyError):
+        # Case where there is not a valid JWT. Just return the original respone
+        return response
+
+
+@app.route("/logout", methods=["POST"])
+def logout():
+    response = jsonify({"msg": "logout successful"})
+    unset_jwt_cookies(response)
+    return response
+
+
+@app.route('/profile/<getemail>', methods=["GET"])
+@jwt_required()
+def my_profile(getemail):
+    print(getemail)
+    if not getemail:
+        return jsonify({"error": "Unauthorized Access"}), 401
+
+    cur = mysql.connection.cursor()
+    # cur.execute("""select passenger_id, first_name, last_name, email, booking_frequency from registered_passenger where email = %s;""", (getemail,)) #edit this for get necessary data
+    cur.execute("""call get_profile(%s);""", (getemail,))
+    results = cur.fetchone()
+    passenger_id = results[0]
+    first_name = results[1]
+    last_name = results[2]
+    email = results[3]
+    booking_frequency = results[4]
+
+    cur.close()
+
+    response_body = {
+        "passenger_id": passenger_id,
+        "email": email,
+        "passenger_id": passenger_id,
+        "booking_frequency": booking_frequency,
+        "first_name": first_name,
+        "last_name": last_name
+    }
+
+    return response_body
+
+
+@app.route('/getflight', methods=["GET"])
+def get_flight():
+    departureLocation = request.json["departureLocation"]
+    departureDate = request.json["departureDate"]
+    arrivalLocation = request.json["arrivalLocation"]
+
+    cur = mysql.connection.cursor()
+    cur.execute("""call RequestFlights(%s, %s, %s);""",
+                (departureLocation, arrivalLocation, departureDate,))
+    results = cur.fetchone()
+    if not results:
+        return jsonify({"error": "No flights found"}), 401
+    cur.close()
+
+
+    flight_schedule_id = results[0]
+    flight_date = results[1].strftime("%Y-%m-%d")
+
+    departure_time = results[2]
+    hours, remainder = divmod(departure_time.seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    departure_time_str = f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+    
+    arival_time = results[3].strftime("%Y-%m-%d %H:%M:%S")
+
+    aircraft_id = results[4]
+    flight_status = results[5]
+    flight_id = results[6]
+
+    response_body = {
+        "flight_schedule_id": flight_schedule_id,
+        "flight_date": flight_date,
+        "departure_time": departure_time_str,
+        "arival_time": arival_time,
+        "aircraft_id": aircraft_id,
+        "flight_status": flight_status,
+        "flight_id": flight_id
+    }
+
+    return jsonify(response_body)
+
+### this for get the flight details
+# @app.route('/available', methods=["POST"])
+# def available():
+#     flight_schedule_id = request.json["flight_schedule_id"]
+#     flight_date
+#     cur = mysql.connection.cursor()
+#     return jsonify()
+
+
+@app.route('/booking', methods=["POST"])
+def booking():
+    flight_schedule_id = request.json["flight_schedule_id"]
+    passenger_id = request.json["passenger_id"]
+    seat_no = request.json["seat_no"]
+
+
+    cur = mysql.connection.cursor()
+    cur.execute("""insert into booking (flight_schedule_id, passenger_id, seat_no, payment_status) value (%s, %s, %s, true);""",(flight_schedule_id, passenger_id, seat_no,))
+    mysql.connection.commit()
+    cur.close()
+    return jsonify({"message": "Booking Successful"}), 201
+
+
+@app.route('/viweticket', methods=["GET"])
+def viweTicket():
+    passenger_id = request.json["passenger_id"]
+    cur = mysql.connection.cursor()
+    cur.execute("""select * from ticket where passenger_id = %s;""", (passenger_id,))
+    results = cur.fetchall()
+    if not results:
+        return jsonify({"error": "No tickets found"}), 401
+    cur.close()
+    
+    return jsonify(results)
+
+
+
+if __name__ == '__main__':
+    app.run()
